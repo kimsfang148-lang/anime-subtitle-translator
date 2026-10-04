@@ -1,12 +1,30 @@
 # Anime Subtitle Translator
 
-This project translates `.srt` subtitle files into Korean automatically.
+This project contains two approaches:
 
-## Features
-- Detects subtitle language automatically (`ja`, `en`, `ko`)
-- Keeps original timestamps and subtitle order
-- Saves output as a new `.srt` file
-- Can process one file or every `.srt` in a directory
+## 1) File-based subtitle translation
+This version reads `.srt` files and translates each subtitle block while preserving timestamps.
+
+Usage:
+
+```bash
+python main.py "D:\anime_subtitles" -t ko
+```
+
+## 2) Real-time subtitle OCR translation
+This version captures the bottom portion of the screen, detects subtitle text with OCR, and translates it into Korean.
+
+Usage:
+
+```bash
+python realtime_ocr_translator.py --lang ko
+```
+
+Optional capture region:
+
+```bash
+python realtime_ocr_translator.py --lang ko --region 100,500,900,200
+```
 
 ## Install
 
@@ -14,27 +32,7 @@ This project translates `.srt` subtitle files into Korean automatically.
 pip install -r requirements.txt
 ```
 
-## Usage
-
-Single file:
-
-```bash
-python main.py example.srt -t ko
-```
-
-Directory:
-
-```bash
-python main.py subtitles/ -t ko
-```
-
-If you want to translate into English instead:
-
-```bash
-python main.py example.srt -t en
-```
-
 ## Notes
-- This uses Google Translate via `googletrans`.
-- For best results, use a clean `.srt` file without broken subtitle blocks.
-- Real anime subtitles may contain styling tags or special characters, so the output should still be checked before publishing.
+- Real-time OCR works best when the subtitle is in the lower part of the screen and the text is large and clear.
+- For anime streams, the subtitle box usually appears near the bottom; tune the `--region` value if needed.
+- This is an OCR-based approach, so subtitle recognition may be imperfect depending on font, size, and video quality.
